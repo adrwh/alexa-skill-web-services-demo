@@ -1,0 +1,35 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "web services demo",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "GetSThreeIntent",
+          "samples": [
+            "get s three demo",
+            "s three"
+          ]
+        },
+        {
+          "name": "GetDynamoDBIntent",
+          "samples": [
+            "get dynamo db demo",
+            "dynamo db"
+          ]
+        }
+      ]
+    }
+  }
+}
