@@ -2,3 +2,4 @@ lambda/custom/node_modules
 .ask/config
 skill.json
 .DS_Store
+hooks

@@ -28,6 +28,19 @@
             "get dynamo db demo",
             "dynamo db"
           ]
+        },
+        {
+          "name": "PutDynamoDBIntent",
+          "samples": [
+            "add {name} to dynamo db demo",
+            "add {name}"
+          ],
+          "slots": [
+            {
+              "name": "name",
+              "type": "AMAZON.US_FIRST_NAME"
+            }
+          ]
         }
       ]
     }

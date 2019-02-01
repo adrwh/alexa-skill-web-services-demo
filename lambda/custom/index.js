@@ -2,6 +2,9 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
+const AWS = require('aws-sdk')
+const dynamoDb = new AWS.DynamoDB.DocumentClient();
+const uuid = require('uuid');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -44,7 +47,48 @@ const GetSThreeIntentHandler = {
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
+      .withSimpleCard('S3 Web Services Demo', speechText)
+      .getResponse();
+  },
+};
+
+const PutDynamoDBIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PutDynamoDBIntent';
+  },
+  handle(handlerInput) {
+    
+    let name = handlerInput.requestEnvelope.request.intent.slots.name.value;
+    let timestamp = new Date().getTime();
+    let speechText;
+
+    const dynamodbParams = {
+      TableName: 'alexa-skill-web-services-demo',
+      Item: {
+        id: uuid.v4(),
+        name: name,
+        modified: timestamp,
+      },
+    };
+
+    console.log(`Attempting to add ${name}`);  
+      
+    dynamoDb.put(dynamodbParams).promise()
+    .then(data => {
+      console.log(`Successfully added ${name} to Dynamo`);
+      speechText = `Successfully added ${name} to Dynamo`
+    })
+    .catch(err => {
+      console.error(err);
+      speechText = 'Dynamo, we have a problem.';
+    });
+
+    speechText = `Successfully added ${name} to Dynamo`
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .withSimpleCard('DynamoDB Web Services Demo', speechText)
       .getResponse();
   },
 };
@@ -130,6 +174,7 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
     GetSThreeIntentHandler,
+    PutDynamoDBIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler
