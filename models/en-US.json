@@ -25,8 +25,14 @@
         {
           "name": "GetDynamoDBIntent",
           "samples": [
-            "get dynamo db demo",
-            "dynamo db"
+            "get {name} from dynamo db",
+            "get {name}"
+          ],
+          "slots": [
+            {
+              "name": "name",
+              "type": "AMAZON.US_FIRST_NAME"
+            }
           ]
         },
         {
